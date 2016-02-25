@@ -12,6 +12,7 @@ struct Array
 // Chú ý: Vị trí các phần tử trong mảng tính từ 0
 
 void initialize(struct Array **aptr, int size);		// Khởi tạo mảng a // size là số phần tử của mảng
+void reallocate(struct Array **aptr, int size);		// Cấp phát lại bộ nhớ
 void delete(struct Array *a);						// Xoá mảng a
 
 float get(struct Array *a, int i);					// Trả về giá trị phần tử thứ i của mảng // Trả về giá trị -1 nếu i không hợp lệ
@@ -33,6 +34,16 @@ void binarysearch(struct Array *a);					// Tìm kiếm nhị phân
 
 float difference(struct Array *a, int i1, int i2);	// Độ lệch giá trị giữa hai phần tử i1 và i2
 float deviation(struct Array *a);					// Trả về giá trị độ lệch trung bình của mảng // https://en.wikipedia.org/wiki/Average_absolute_deviation -> Mean absolute deviation around a central point
+
+
+// Giao diện người sử dụng
+
+void commandlineinterface();						// Giao diện dòng lệnh
+
+int getcommand();									// In ra danh sách các lênh và nhận lệnh của người sử dụng
+void runcommand(int selection);						// Thực hiện lệnh
+void getnewarray(struct Array **a);					// Nhập vào mảng mới
+
 
 
 
