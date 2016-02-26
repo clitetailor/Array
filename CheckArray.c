@@ -44,9 +44,10 @@ void test_min(struct Array *a)
 	int * t;
 	printf("\nGia tri nho nhat: %f", min(a, &t));
 	
-	for (int i = 0; i < a->Count; ++i)
+	int i;
+	for (i = 0; i < a->Count; ++i)
 	{
-		printf("\n%d", f[i]);
+		printf("\n%d", t[i]);
 	}
 }
 
@@ -90,6 +91,7 @@ void test_autogenerate()
 	 *
 	 */
 	test_order(a);
+	test_min(a);
 	
 	
 	delete(a);					// Luôn phải có dòng này ở cuối mỗi chương trình
