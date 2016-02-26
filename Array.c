@@ -76,10 +76,27 @@ void selectionsort(struct Array *a)
 	
 };
 
-// Sắp xếp chèn
-void insertionsort(struct Array *a)
+void insert(struct Array *a, int k, float value) 
 {
-	
+    int i= k-1;
+    while (i > 0 && get(a,i) > value) 
+	{
+		set(a,i+1,get(a,i));
+        i= i - 1;
+    }
+    set(a,i+1,value);
+}
+
+// Sắp xếp chèn
+void insertionsort(struct Array *a)				// Sắp xếp chèn
+{
+    int k= 2,length=1;
+    while(get(a,length)!=-1) length++;
+    while (k < length) 
+	{
+        insert(a, k, get(a,k));
+        k= k + 1;
+    }
 };
 
 
@@ -91,9 +108,29 @@ float max(struct Array *a, int **maxArray)
 };
 
 // Trả về giá trị nhỏ nhất // Mảng minArray dùng để lưu vị trí các phân tử nhỏ nhất
-float min(struct Array *a, int **minArray)
+int min(struct Array *a, int **minArray)			// Trả về giá trị nhỏ nhất // Mảng minArray dùng để lưu vị trí các phân tử nhỏ nhất
 {
-	
+	int i=0,k,j,h,m;
+    k=1;h=0,m=get(a,0);
+    i=a->Count;
+    for(j=0;j<i;++j)
+    {
+        if(get(a,j)<=m) if(get(a,j)==m) k++;
+        else
+        {
+            k=1;
+            m=get(a,j);  
+        }
+    }
+    int f[k];
+    for(j=0;j<i;++j) if(get(a,j)==m)
+    {
+        f[h]=j;
+        h++;
+    }
+    *minArray=f;
+    return m;
+
 };
 
 // Tìm giá trị trung bình của các phần tử trong mảng
