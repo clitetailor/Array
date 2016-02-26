@@ -100,8 +100,8 @@ float min(struct Array *a, int **minArray)			// Trả về giá trị nhỏ nh�
     i=a->Count;
     for(j=0;j<i;++j)
     {
-        if(get(a,j)<=m) if(get(a,j)==m) k++;
-        else
+        if(get(a,j)==m) k++;
+        if(get(a,j)<m) 
         {
             k=1;
             m=get(a,j);  
