@@ -39,6 +39,19 @@ void test_order(struct Array *a)
 }
 
 
+void test_min(struct Array *a)
+{
+	int * t;
+	printf("\nGia tri nho nhat: %f", min(a, &t));
+	
+	for (int i = 0; i < a->Count; ++i)
+	{
+		printf("\n%d", f[i]);
+	}
+}
+
+
+
 /*   Hàm test_autogenerate sử dụng các hàm kiểm tra ở trên kiểm tra với bộ n số ngẫu nhiên máy tự tạo   */
 void test_autogenerate()
 {
