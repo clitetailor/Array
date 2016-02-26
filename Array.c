@@ -64,17 +64,7 @@ void print(struct Array *a)
 }
 
 
-// Sắp xếp nổi bọt
-void bublesort(struct Array *a)
-{
-	
-};
 
-// Sắp xếp có lựa chọn
-void selectionsort(struct Array *a)
-{
-	
-};
 
 void insert(struct Array *a, int k, float value) 
 {
@@ -101,14 +91,9 @@ void insertionsort(struct Array *a)				// Sắp xếp chèn
 
 
 
-// Trả về giá trị lớn nhất // Mảng maxArray dùng để lưu vị trí các phần tử mang giá trị lớn nhất
-float max(struct Array *a, int **maxArray)
-{
-	
-};
 
 // Trả về giá trị nhỏ nhất // Mảng minArray dùng để lưu vị trí các phân tử nhỏ nhất
-int min(struct Array *a, int **minArray)			// Trả về giá trị nhỏ nhất // Mảng minArray dùng để lưu vị trí các phân tử nhỏ nhất
+float min(struct Array *a, int **minArray)			// Trả về giá trị nhỏ nhất // Mảng minArray dùng để lưu vị trí các phân tử nhỏ nhất
 {
 	int i=0,k,j,h,m;
     k=1;h=0,m=get(a,0);
@@ -131,35 +116,4 @@ int min(struct Array *a, int **minArray)			// Trả về giá trị nhỏ nhất
     *minArray=f;
     return m;
 
-};
-
-// Tìm giá trị trung bình của các phần tử trong mảng
-float average(struct Array *a)
-{
-	
-};
-
-
-
-// Tìm kiếm lần lượt
-void sequentialsearch(struct Array *a)
-{
-	
-};
-
-// Tìm kiếm nhị phân
-void binarysearch(struct Array *a);
-
-
-
-// Độ lệch giá trị giữa hai phần tử i1 và i2
-float difference(struct Array *a, int i1, int i2)
-{
-	
-};
-
-// Trả về giá trị độ lệch trung bình của mảng // https://en.wikipedia.org/wiki/Average_absolute_deviation -> Mean absolute deviation around a central point
-float deviation(struct Array *a)
-{
-	
 };
