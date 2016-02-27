@@ -107,7 +107,13 @@ void selectionsort(struct Array *a)
 // Sắp xếp chèn
 void insertionsort(struct Array *a)
 {
-	
+    int k= 2,length=1;
+    while(get(a,length)!=-1) length++;
+    while (k < length) 
+	{
+        insert(a, k, get(a,k));
+        k= k + 1;
+    }
 };
 
 
@@ -121,7 +127,24 @@ float findmax(struct Array *a, int **maxArray)
 // Trả về giá trị nhỏ nhất // Mảng minArray dùng để lưu vị trí các phân tử nhỏ nhất
 float findmin(struct Array *a, int **minArray)
 {
-	return 0;
+	int i=0,j,h, m=get(a,0);
+    h=0;
+    i=a->Count;
+    for(j=1;j<i;++j)
+    {
+        if(get(a,j)<m)
+        {
+            m=get(a,j);  
+        }         
+    }
+    
+    for(j=0;j<i;++j) 
+    if(get(a,j)==m)
+    {
+        minArray[h]=j;
+        h++;
+    }
+    return m;
 };
 
 // Tìm giá trị trung bình của các phần tử trong mảng
