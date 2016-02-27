@@ -1,6 +1,8 @@
 #include "Array.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <conio.h> // Bỏ dòng này
+#include <windows.h>
 
 
 
@@ -49,18 +51,17 @@ void swap(struct Array *a, int i1, int i2)
 
 void print(struct Array *a)
 {
-	printf("\n");
+	printf("\nDanh sach mang:\n\t");
 	int i;
 	for (i = 0; i < a->Count; ++i)
 	{
 		printf("%d: %-5.0f ", i + 1, get(a, i));
 	
 		if (i % 5 == 4)
-			printf("\n");
+			printf("\n\t");
 		else
 			printf("| ");
 	}
-	printf("\n");
 }
 
 
@@ -85,13 +86,13 @@ void insertionsort(struct Array *a)
 
 
 // Trả về giá trị lớn nhất // Mảng maxArray dùng để lưu vị trí các phần tử mang giá trị lớn nhất
-float max(struct Array *a, int **maxArray)
+float findmax(struct Array *a, int **maxArray)
 {
 	return 0;
 };
 
 // Trả về giá trị nhỏ nhất // Mảng minArray dùng để lưu vị trí các phân tử nhỏ nhất
-float min(struct Array *a, int **minArray)
+float findmin(struct Array *a, int **minArray)
 {
 	return 0;
 };
@@ -153,16 +154,17 @@ int getcommand()
 	menu[12] = 	"Ket thuc chuong trinh";
 	
 	int i;
+	printf("\nDanh sach cac lenh:\n");
 	for (i = 0; i < menusize; ++i)
 	{
-		printf("\n%d, %s\n", i+1, menu[i]);
+		printf("\n\t%d, %s", i+1, menu[i]);
 	}
 	
 	int selection;
 	do
 	{
-		printf("\nNhap vao lenh ban muon thuc hien (1-13):\n");
-		scanf("%n", &selection);
+		printf("\nNhap vao lenh ban muon thuc hien (1-13):");
+		scanf("%d", &selection);
 	} while (selection < 1 || selection > 13);
 	
 	return selection;
@@ -171,17 +173,12 @@ int getcommand()
 
 void getnewarray(struct Array **a)
 {
-	
-	printf("test 2\n");	// Delete this line
-	
 	int n;
 	do
 	{
 		printf("\nNhap vao so luong phan tu cua mang:");
 		scanf("%d", &n);
 	} while( n < 1 );
-
-	printf("test 3\n");	// Delete this line
 	
 	initialize(a, n);
 	
@@ -202,65 +199,68 @@ void getnewarray(struct Array **a)
 
 void runcommand(int selection)
 {
-	// switch (selection)
-	// {
-	// 	case :
-	// 			{
-	// 				break;
-	// 			},
-	// 	case :
-	// 			{
-	// 				break;
-	// 			},
-	// 	case :
-	// 			{
-	// 				break;
-	// 			},
-	// 	case :
-	// 			{
-	// 				break;
-	// 			},
-	// 	case :
-	// 			{
-	// 				break;
-	// 			},
-	// 	case :
-	// 			{
-	// 				break;
-	// 			},
-	// 	case :
-	// 			{
-	// 				break;
-	// 			},
-	// 	case :
-	// 			{
-	// 				break;
-	// 			},
-	// 	case :
-	// 			{
-	// 				break;
-	// 			},
-	// 	case :
-	// 			{
-	// 				break;
-	// 			},
-	// 	case :
-	// 			{
-	// 				break;
-	// 			},
-	// 	case :
-	// 			{
-	// 				break;
-	// 			},
-	// 	case :
-	// 			{
-	// 				break;
-	// 			},
-	// 	case :
-	// 			{
-	// 				break;
-	// 			}
-	// }
+	switch (selection)
+	{
+		case 1:
+				{
+					break;
+				}
+		case 2:
+				{
+					break;
+				}
+		case 3:
+				{
+					break;
+				}
+		case 4:
+				{
+					break;
+				}
+		case 5:
+				{
+					break;
+				}
+		case 6:
+				{
+					break;
+				}
+		case 7:
+				{
+					break;
+				}
+		case 8:
+				{
+					break;
+				}
+		case 9:
+				{
+					break;
+				}
+		case 10:
+				{
+					break;
+				}
+		case 11:
+				{
+					break;
+				}
+		case 12:
+				{
+					break;
+				}
+		case 13:
+				{
+					printf("\nChuong trinh dang ket thuc! ");
+					Sleep(500);
+					printf(".");
+					Sleep(500);
+					printf(".");
+					Sleep(500);
+					printf(".\n\n");
+					break;
+				}
+	}
 }
 
 
@@ -269,7 +269,6 @@ void commandlineinterface()
 {
 	struct Array *a;
 	int selection;
-	printf("test 1\n");		// Delete this line
 	getnewarray(&a);
 	
 	print(a);

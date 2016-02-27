@@ -7,7 +7,7 @@
 
 # Mở CMD
 #	Vào thư mục hiện tại bằng cách copy đường dẫn, nhấn chuột phải vào cmd chọn paste
-#	Gõ mingw32-make Makefile all hoặc make hoặc ming64-make Make all
+#	Gõ mingw32-make Makefile all
 
 
 all:
