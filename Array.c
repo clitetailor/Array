@@ -83,6 +83,8 @@ void selectionsort(struct Array *a)
 //
 // Vis duj bay giow muoons xem bai tooi nhas!
 
+// Copy paste code của ông vào đây nhá! Xong nhấn dấu + để đưa các file thay đổi lên stage.
+// Xong đặt tên, nhấn Ctrl+Enter đê commit xong nhấn xync thì tôi và mọi người có thể xem được !
 
 // Tìm giá trị trung bình của các phần tử trong mảng
 float average(struct Array *a)
