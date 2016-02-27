@@ -70,6 +70,20 @@ void selectionsort(struct Array *a)
 };
 
 
+// The nay nhe!
+// Ben nay laf cac file co thay doi ne
+// Day laf so sanh su thay doi ne
+// Nhan dau + de dua len stage
+// Dat ten
+// Xong nhan Ctrl+Enter de commit
+// Nhan vao dong duoi chu git xong nhan Ctrl+Enter
+// No se luu vao trong may ong
+
+// De dua len github de mọi người có thể xem thì nhấn sync nhé! Cái vòng tròn dươi góc trái bên cahnj tên ông ý!
+//
+// Vis duj bay giow muoons xem bai tooi nhas!
+
+
 // Tìm giá trị trung bình của các phần tử trong mảng
 float average(struct Array *a)
 {
