@@ -4,7 +4,7 @@
 #include "Array.h"
 
 
-/* 
+/*
  *
  * Nếu có thêm các hàm để test chèn vào đây. Số các hàm sử dụng để test không hạn chế.
  *
@@ -65,12 +65,17 @@ void test_autogenerate()
 	{
 		set(a, i, rand());
 	}
-    
+	
+	insertionsort(a);
 	/* In dãy a ra màn hình */
 	print(a);
-    insertionsort(a);
-    binarysearch(a);
-
+	
+	/*
+	 *
+	 * Đặt các test vào đây
+	 *
+	 *
+	 */
 	test_order(a);
 	
 	
@@ -103,9 +108,10 @@ void test_manual()
 	}
 	
 	
+	insertionsort(a);
+	
 	/* In dãy a ra màn hình */
 	print(a);
-	
 	
 	
 	/*
