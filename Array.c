@@ -104,16 +104,31 @@ void selectionsort(struct Array *a)
 	
 };
 
+
+void insert(struct Array *a, int k, float value);
+
 // Sắp xếp chèn
 void insertionsort(struct Array *a)
 {
-    int k= 2,length=1;
-    while(get(a,length)!=-1) length++;
-    while (k < length) 
+    int k;
+	
+    for (k = 1; k < a->Count; ++k)
 	{
-        insert(a, k, get(a,k));
-        k= k + 1;
+		insert(a, k, get(a, k));
+	}
+};
+
+void insert(struct Array *a, int k, float value)
+{
+    int i = k - 1;
+	
+    while (i > -1 && get(a, i) > value) 
+	{
+		set(a, i + 1, get(a, i));
+        --i;
     }
+	
+    set(a, i + 1, value);
 };
 
 
@@ -125,26 +140,40 @@ float findmax(struct Array *a, int **maxArray)
 };
 
 // Trả về giá trị nhỏ nhất // Mảng minArray dùng để lưu vị trí các phân tử nhỏ nhất
-float findmin(struct Array *a, int **minArray)
+float findmin(struct Array *a, int **minArray, int *length)
 {
-	int i=0,j,h, m=get(a,0);
-    h=0;
-    i=a->Count;
-    for(j=1;j<i;++j)
-    {
-        if(get(a,j)<m)
-        {
-            m=get(a,j);  
-        }         
-    }
-    
-    for(j=0;j<i;++j) 
-    if(get(a,j)==m)
-    {
-        minArray[h]=j;
-        h++;
-    }
-    return m;
+	int min = get(a, 0);
+	int count = 1;
+	int i;
+	for (i = 1; i < a->Count; ++i)
+	{
+		if (min > get(a, i))
+		{
+			min = get(a, i);
+			count = 1;
+		}
+		else if (min == get(a, i))
+		{
+			++count;
+		}
+		
+	}
+	
+	(*length) = count;
+	(*minArray) = (int *) malloc (sizeof(int) * count);
+	
+	int j = 0;
+	for (i = 0; i < a->Count; ++i)
+	{
+		if (get(a, i) == min)
+		{
+			(*minArray)[j] = i + 1;
+			++j;
+		}
+	}
+	
+	
+	return min;
 };
 
 // Tìm giá trị trung bình của các phần tử trong mảng
@@ -181,7 +210,7 @@ float deviation(struct Array *a)
 
 
 // Giao diện người sử dụng
-
+/*
 int getcommand()
 {
 	printf("\n");
@@ -399,3 +428,4 @@ int main(int argc, char ** argv)
 	
 	return 0;
 }
+*/

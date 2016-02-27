@@ -12,4 +12,5 @@
 
 all:
 	gcc -Wall -c Array.c
-	gcc -Wall -o Array.exe Array.o
+	gcc -Wall -c CheckArray.c
+	gcc -Wall -o CheckArray.exe Array.o CheckArray.o

@@ -11,6 +11,20 @@
  *
  */
 
+void test_findmin(struct Array *a)
+{
+	int i;
+	
+	int *minArray;
+	int length;
+	
+	printf("\nGia tri nho nhat la: %f\n", findmin(a, &minArray, &length));
+	
+	for (i = 0; i < length; ++i)
+	{
+		printf("%7d\n", minArray[i]);
+	}	
+};
 
 /*   Hàm test_order kiểm tra xem dãy đã được sắp xếp theo thứ tự hay chưa   */
 void test_order(struct Array *a)
@@ -108,8 +122,6 @@ void test_manual()
 	}
 	
 	
-	insertionsort(a);
-	
 	/* In dãy a ra màn hình */
 	print(a);
 	
@@ -135,7 +147,7 @@ int main(int argc, char ** argv)
 	 *
 	 *
 	 */
-	test_autogenerate();
+	test_manual();
 	 
 	return 0;
 }
