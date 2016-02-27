@@ -13,8 +13,14 @@ void initialize(struct Array **aptr, int size)
 	(*aptr)->Max = (float*) malloc( sizeof(float) * size);
 	
 	(*aptr)->Count = size;
-	
 };
+
+void reallocate(struct Array **aptr, int size)
+{
+	free( (*aptr)->Max );
+	
+	(*aptr)->Max = (float*) malloc( sizeof(float) * size);
+}
 
 void delete(struct Array *a)
 {
@@ -171,7 +177,7 @@ int getcommand()
 };
 
 
-void getnewarray(struct Array **a)
+void getfirstarray(struct Array **a)
 {
 	int n;
 	do
@@ -181,7 +187,6 @@ void getnewarray(struct Array **a)
 	} while( n < 1 );
 	
 	initialize(a, n);
-	
 	
 	printf("\n");
 	int i;
@@ -197,12 +202,40 @@ void getnewarray(struct Array **a)
 };
 
 
-void runcommand(int selection)
+void getnewarray(struct Array **a)
+{
+	int n;
+	do
+	{
+		printf("\nNhap vao so luong phan tu cua mang:");
+		scanf("%d", &n);
+	} while( n < 1 );
+	
+	reallocate(a, n);
+	
+	
+	printf("\n");
+	int i;
+	float fbuff;
+	
+	for (i = 0; i < n; ++i)
+	{
+		printf("%d, ", i+1);
+		scanf("%f", &fbuff);
+		set(*a, i, fbuff);
+	};
+	
+	print(*a); // Lỗi
+};
+
+
+void runcommand(int selection, struct Array *a)
 {
 	switch (selection)
 	{
 		case 1:
 				{
+					getnewarray(&a);
 					break;
 				}
 		case 2:
@@ -269,14 +302,14 @@ void commandlineinterface()
 {
 	struct Array *a;
 	int selection;
-	getnewarray(&a);
+	getfirstarray(&a);
 	
 	print(a);
 	do
 	{
 		selection = getcommand();
 		
-		runcommand(selection);
+		runcommand(selection, a);
 	} while(selection != 13);
 	
 	delete(a);

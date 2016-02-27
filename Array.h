@@ -2,6 +2,10 @@
 #define _H_ARRAY
 
 
+// Code name: asre12i3uie3 (on Github)
+// This project was created using Visual Studio Code, Dev-C, Git, Github, MinGW
+// These files were encoded in Unicode (UTF-8) some features may not be compatible in Dev-C
+
 
 struct Array
 {
@@ -41,7 +45,8 @@ float deviation(struct Array *a);					// Trả về giá trị độ lệch trun
 void commandlineinterface();						// Giao diện dòng lệnh
 
 int getcommand();									// In ra danh sách các lênh và nhận lệnh của người sử dụng
-void runcommand(int selection);						// Thực hiện lệnh
+void runcommand(int selection, struct Array *a);						// Thực hiện lệnh
+void getfirstarray(struct Array **a);				// Nhập vào mảng mới lần đầu tiên
 void getnewarray(struct Array **a);					// Nhập vào mảng mới
 
 
