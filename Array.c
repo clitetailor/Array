@@ -20,6 +20,8 @@ void reallocate(struct Array **aptr, int size)
 	free( (*aptr)->Max );
 	
 	(*aptr)->Max = (float*) malloc( sizeof(float) * size);
+	
+	(*aptr)->Count = size;
 }
 
 void delete(struct Array *a)
@@ -42,6 +44,7 @@ void set(struct Array *a, int i, float data)
 {
 	if (i > -1 && i < a->Count)
 		a->Max[i] = data;
+		
 };
 
 void swap(struct Array *a, int i1, int i2)
@@ -169,7 +172,7 @@ int getcommand()
 	int selection;
 	do
 	{
-		printf("\nNhap vao lenh ban muon thuc hien (1-13):");
+		printf("\n\nNhap vao lenh ban muon thuc hien (1-13):");
 		scanf("%d", &selection);
 	} while (selection < 1 || selection > 13);
 	
@@ -240,6 +243,7 @@ void runcommand(int selection, struct Array *a)
 				}
 		case 2:
 				{
+					
 					break;
 				}
 		case 3:
