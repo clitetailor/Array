@@ -1,28 +1,46 @@
 #include "Array.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <conio.h> // Bỏ dòng này
 #include <windows.h>
 
 
 
-void initialize(struct Array **aptr, int size)
+int initialize(struct Array **aptr, int size)
 {
 	(*aptr) = (struct Array*) malloc( sizeof(struct Array) );
 	
+	if ( (*aptr) == NULL )
+	{
+		return 2;
+	}
+	
 	(*aptr)->Max = (float*) malloc( sizeof(float) * size);
 	
+	if ( (*aptr)->Max == NULL )
+	{
+		return 1;
+	}
+	
 	(*aptr)->Count = size;
+	
+	return 0;
 };
 
-void reallocate(struct Array **aptr, int size)
+int reallocate(struct Array **aptr, int size)
 {
 	free( (*aptr)->Max );
 	
 	(*aptr)->Max = (float*) malloc( sizeof(float) * size);
 	
+	if ( (*aptr)->Max == NULL )
+	{
+		return 1;
+	}
+	
 	(*aptr)->Count = size;
-}
+	
+	return 0;
+};
 
 void delete(struct Array *a)
 {
@@ -64,7 +82,7 @@ void print(struct Array *a)
 	int i;
 	for (i = 0; i < a->Count; ++i)
 	{
-		printf("%d: %-5.0f ", i + 1, get(a, i));
+		printf("%d: %7.0f ", i + 1, get(a, i));
 	
 		if (i % 5 == 4)
 			printf("\n\t");
@@ -183,13 +201,25 @@ int getcommand()
 void getfirstarray(struct Array **a)
 {
 	int n;
+	int retval;
 	do
 	{
 		printf("\nNhap vao so luong phan tu cua mang:");
 		scanf("%d", &n);
-	} while( n < 1 );
+		
+		retval = initialize(a, n);
+		
+		if (retval == 2)
+		{
+			printf("\nKhong du bo nho de thuc hien chuong trinh\n");
+		}
+		if (retval == 1)
+		{
+			printf("\nKhong du bo nho de cap phat. Nhap lai so phan tu cua mang hoac nhan Ctrl+C de thoat khoi chuong trinh\n");
+		}
+		
+	} while( n < 1 || retval == 1 );
 	
-	initialize(a, n);
 	
 	printf("\n");
 	int i;
@@ -208,13 +238,20 @@ void getfirstarray(struct Array **a)
 void getnewarray(struct Array **a)
 {
 	int n;
+	int retval;
 	do
 	{
 		printf("\nNhap vao so luong phan tu cua mang:");
 		scanf("%d", &n);
-	} while( n < 1 );
-	
-	reallocate(a, n);
+		
+		retval = reallocate(a, n);
+		
+		if (retval == 1)
+		{
+			printf("\nKhong du bo nho de cap phat. Nhap lai so phan tu cua mang hoac nhan Ctrl+C de thoat khoi chuong trinh\n");
+		}
+		
+	} while( n < 1 || retval == 1 );
 	
 	
 	printf("\n");
@@ -317,6 +354,19 @@ void commandlineinterface()
 	} while(selection != 13);
 	
 	delete(a);
+}
+
+
+void escape()
+{
+	printf("\nThoat khoi chuong trinh! ");
+					Sleep(500);
+					printf(".");
+					Sleep(500);
+					printf(".");
+					Sleep(500);
+					printf(".\n\n");
+	exit(0);
 }
 
 

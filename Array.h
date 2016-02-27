@@ -15,8 +15,8 @@ struct Array
 
 // Chú ý: Vị trí các phần tử trong mảng tính từ 0
 
-void initialize(struct Array **aptr, int size);		// Khởi tạo mảng a // size là số phần tử của mảng
-void reallocate(struct Array **aptr, int size);		// Cấp phát lại bộ nhớ
+int initialize(struct Array **aptr, int size);		// Khởi tạo mảng a // size là số phần tử của mảng
+int reallocate(struct Array **aptr, int size);		// Cấp phát lại bộ nhớ
 void delete(struct Array *a);						// Xoá mảng a
 
 float get(struct Array *a, int i);					// Trả về giá trị phần tử thứ i của mảng // Trả về giá trị -1 nếu i không hợp lệ
@@ -49,6 +49,7 @@ void runcommand(int selection, struct Array *a);						// Thực hiện lệnh
 void getfirstarray(struct Array **a);				// Nhập vào mảng mới lần đầu tiên
 void getnewarray(struct Array **a);					// Nhập vào mảng mới
 
+void escape();										// Thoát khỏi chương trình khi gặp lỗi // Nếu may mắn sẽ gặp được lỗi này! :v
 
 
 
