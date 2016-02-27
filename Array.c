@@ -63,7 +63,7 @@ void print(struct Array *a)
 	printf("\n");
 }
 
-
+// Ong copy code của ông vào trong đây
 
 
 void insert(struct Array *a, int k, float value) 
@@ -77,7 +77,6 @@ void insert(struct Array *a, int k, float value)
     set(a,i+1,value);
 }
 
-// Sắp xếp chèn
 void insertionsort(struct Array *a)				// Sắp xếp chèn
 {
     int k= 2,length=1;
@@ -87,32 +86,29 @@ void insertionsort(struct Array *a)				// Sắp xếp chèn
         insert(a, k, get(a,k));
         k= k + 1;
     }
-};
+}
 
-
-
+//Xong rồi nhé save lại
 
 // Trả về giá trị nhỏ nhất // Mảng minArray dùng để lưu vị trí các phân tử nhỏ nhất
-float min(struct Array *a, int **minArray)			// Trả về giá trị nhỏ nhất // Mảng minArray dùng để lưu vị trí các phân tử nhỏ nhất
+float min(struct Array *a, int *minArray)			// Trả về giá trị nhỏ nhất // Mảng minArray dùng để lưu vị trí các phân tử nhỏ nhất
 {
-	int i=0;
-	
-    for(i=0; i<a->Count;++i)
+	int i=0,j,h, m=get(a,0);
+    h=0;
+    i=a->Count;
+    for(j=1;j<i;++j)
     {
-        if(get(a,j)==m) k++;
-        if(get(a,j)<m) 
+        if(get(a,j)<m)
         {
-            k=1;
             m=get(a,j);  
-        }
+        }         
     }
-    int f[k];
-    for(j=0;j<i;++j) if(get(a,j)==m)
+    
+    for(j=0;j<i;++j) 
+    if(get(a,j)==m)
     {
-        f[h]=j;
+        minArray[h]=j;
         h++;
     }
-    *minArray=f;
     return m;
-
 };
