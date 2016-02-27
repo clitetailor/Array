@@ -95,10 +95,9 @@ void insertionsort(struct Array *a)				// Sắp xếp chèn
 // Trả về giá trị nhỏ nhất // Mảng minArray dùng để lưu vị trí các phân tử nhỏ nhất
 float min(struct Array *a, int **minArray)			// Trả về giá trị nhỏ nhất // Mảng minArray dùng để lưu vị trí các phân tử nhỏ nhất
 {
-	int i=0,k,j,h,m;
-    k=1;h=0,m=get(a,0);
-    i=a->Count;
-    for(j=0;j<i;++j)
+	int i=0;
+	
+    for(i=0; i<a->Count;++i)
     {
         if(get(a,j)==m) k++;
         if(get(a,j)<m) 
