@@ -77,7 +77,7 @@ void insert(struct Array *a, int k, float value)
     set(a,i+1,value);
 }
 
-void insertionsort(struct Array *a)				// Sắp xếp chèn
+void insertionsort(struct Array *a)
 {
     int k= 2,length=1;
     while(get(a,length)!=-1) length++;
@@ -88,10 +88,8 @@ void insertionsort(struct Array *a)				// Sắp xếp chèn
     }
 }
 
-//Xong rồi nhé save lại
 
-// Trả về giá trị nhỏ nhất // Mảng minArray dùng để lưu vị trí các phân tử nhỏ nhất
-float min(struct Array *a, int *minArray)			// Trả về giá trị nhỏ nhất // Mảng minArray dùng để lưu vị trí các phân tử nhỏ nhất
+float min(struct Array *a, int *minArray)
 {
 	int i=0,j,h, m=get(a,0);
     h=0;
