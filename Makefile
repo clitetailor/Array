@@ -11,12 +11,13 @@
 
 .PHONY: all
 all:
-	gcc -Wall -c Array.c
-	gcc -Wall -o Array.exe Array.o
+	gcc -Dall -Wall -c CheckArray.c
+	gcc -Dall -Wall -c Array.c
+	gcc -Wall -o Array.exe Array.o CheckArray.o
 	
 .PHONY: test
 test:
-	gcc -Dtest -Wall -c Array.c
+	gcc -Wall -c Array.c
 	
-	gcc -Wall -c CheckArray.c
+	gcc -Dtest -Wall -c CheckArray.c
 	gcc -Wall -o CheckArray.exe Array.o CheckArray.o

@@ -3,6 +3,26 @@
 #include <time.h>
 #include "Array.h"
 
+/*   Chương trình test thứ nhất. Được build khi chạy dòng lệnh mingw32-make all   */
+
+#ifdef all
+
+int main(int argc, char ** argv)
+{
+	commandlineinterface();
+	
+	return 0;
+}
+
+#endif
+
+
+
+
+/*   Chương trình test thứ hai. Được build khi chạy dòng lệnh mingw32-make test   */
+
+#ifdef test
+
 
 /*
  *
@@ -10,23 +30,6 @@
  *
  *
  */
-
-/*   Hàm test_findmin kiểm tra xem hàm findmin đã đúng hay chưa   */
-void test_findmin(struct Array *a)
-{
-	int i;
-	
-	int *minArray;
-	int length;
-	
-	printf("\nGia tri nho nhat la: %f\n", findmin(a, &minArray, &length));
-	
-	for (i = 0; i < length; ++i)
-	{
-		printf("\nVi tri cac phan tu nho nhat la:\n");
-		printf("%7d\n", minArray[i]);
-	}	
-};
 
 /*   Hàm test_order kiểm tra xem dãy đã được sắp xếp theo thứ tự hay chưa   */
 void test_order(struct Array *a)
@@ -167,3 +170,5 @@ int main(int argc, char ** argv)
 	 
 	return 0;
 }
+
+#endif

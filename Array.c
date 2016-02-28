@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <windows.h>
 #include <math.h>
+#include <time.h>
+
 
 
 int initialize(struct Array **aptr, int size)
@@ -278,6 +280,7 @@ void sequentialsearch(struct Array *a, float n, int **position, int *length)
 // Tìm kiếm nhị phân
 int binarysearch(struct Array *a, float n)
 {
+	insertionsort(a);
     int first, last, middle;
 	
 	first = 0;
@@ -332,13 +335,13 @@ float deviation(struct Array *a)
 
 
 
-#ifndef test 				// When "test" is mingw32-make first argument. This part is hidden away
+#ifdef all
 
 int getcommand()
 {
 	printf("\n");
 	
-	int menusize = 13;
+	int menusize = 12;
 	char ** menu = (char **) malloc(sizeof(char*) * menusize);
 	
 	menu[0] = 	"Nhap vao mang moi";
@@ -352,8 +355,7 @@ int getcommand()
 	menu[8] = 	"Tim kiem nhi phan";
 	menu[9] = 	"Do lech gia tri gia tri cua hai phan tu";
 	menu[10] = 	"Tra ve gia tri do lech trung binh cua mang";
-	menu[11] = 	"Do phuc tap cua thuat toan";
-	menu[12] = 	"Ket thuc chuong trinh";
+	menu[11] = 	"Ket thuc chuong trinh";
 	
 	int i;
 	printf("\nDanh sach cac lenh:\n");
@@ -365,11 +367,11 @@ int getcommand()
 	int selection;
 	do
 	{
-		printf("\n\nNhap vao lenh ban muon thuc hien (1-13):");
+		printf("\n\nNhap vao lenh ban muon thuc hien (1-12):");
 		scanf("%d", &selection);
 		
 		fflush(stdin);
-	} while (selection < 1 || selection > 13);
+	} while (selection < 1 || selection > 12);
 	
 	return selection;
 };
@@ -404,19 +406,50 @@ void getfirstarray(struct Array **a)
 		
 	} while( n < 1 || retval == 1 );
 	
+	char c;
 	
-	printf("\n");
-	int i;
-	float fbuff;
-	
-	for (i = 0; i < n; ++i)
+	do
 	{
-		printf("%d, ", i+1);
-		scanf("%f", &fbuff);
-		fflush(stdin);
-		set(*a, i, fbuff);
-	};
-	
+		printf("\nChon nhap vao tu file (F) hay nhap vao tu ban phim (P):");
+		c = getc(stdin);
+		if (c == 'p' || c == 'P')
+		{
+			printf("\n");
+			int i;
+			float fbuff;
+			
+			for (i = 0; i < n; ++i)
+			{
+				printf("%d, ", i+1);
+				scanf("%f", &fbuff);
+				fflush(stdin);
+				set(*a, i, fbuff);
+			};
+		}
+		if (c == 'F'|| c == 'f')
+		{
+			char filename[100];
+			printf("\nNhap vao ten file:");
+			fflush(stdin);
+			fgets(filename, 100, stdin);
+			
+			float fbuff;
+			FILE *inputfile = fopen(filename, "r");
+			int i;
+			for (i = 0; i < (*a)->Count; ++i)
+			{
+				if (feof(inputfile))
+				{
+					set(*a, i, -1);
+				}
+				else
+				{
+					fscanf(inputfile, "%f", &fbuff);
+					set(*a, i, fbuff);
+				}
+			}
+		}
+	} while (c != 'f' || c != 'F' || c != 'p' || c!= 'P');
 };
 
 void escape()
@@ -539,6 +572,20 @@ void printarraywithmark(struct Array *a, int *position, int length)
 	}
 }
 
+float timing(int code)
+{
+	static time_t t;
+	if (code == 0)
+	{
+		t = clock();
+		return 0;
+	}
+	else
+	{
+		return clock() - t;
+	}
+}
+
 
 void runcommand(int selection, struct Array *a)
 {
@@ -552,27 +599,40 @@ void runcommand(int selection, struct Array *a)
 		case 2:
 				{
 					// bublesort
+					timing(0);
 					bublesort(a);
 					print(a);
+					
+					printf("\nThoi gian thuc hien:%f ms\n", timing(1) / 1000);
+					printf("\nDo phuc tap cua thuat toan O(n^2)\n");
 					break;
 				}
 		case 3:
 				{
 					// selectionsort
+					timing(0);
 					selectionsort(a);
 					print(a);
+					
+					printf("\nThoi gian thuc hien:%f ms\n", timing(1) / 1000);
+					printf("\nDo phuc tap cua thuat toan O(n^2)\n");
 					break;
 				}
 		case 4:
 				{
 					// insertionsort
+					timing(0);
 					insertionsort(a);
 					print(a);
+					
+					printf("\nThoi gian thuc hien:%f ms\n", timing(1) / 1000);
+					printf("\nDo phuc tap cua thuat toan O(n^2)\n");
 					break;
 				}
 		case 5:
 				{
 					// findmax
+					timing(0);
 					int *maxArray;
 					int length;
 					
@@ -587,11 +647,15 @@ void runcommand(int selection, struct Array *a)
 					}
 					
 					free(maxArray);
+					
+					printf("\nThoi gian thuc hien:%f ms\n", timing(1) / 1000);
+					printf("\nDo phuc tap cua thuat toan O(n)\n");
 					break;
 				}
 		case 6:
 				{
 					// findmin
+					timing(0);
 					int *minArray;
 					int length;
 					
@@ -606,17 +670,25 @@ void runcommand(int selection, struct Array *a)
 					}
 					
 					free(minArray);
+					
+					printf("\nThoi gian thuc hien:%f ms\n", timing(1) / 1000);
+					printf("\nDo phuc tap cua thuat toan O(n)\n");
 					break;
 				}
 		case 7:
 				{
 					// average
+					timing(0);
 					printf("\nGia tri trung binh cua mang:%f\n", average(a));
+					
+					printf("\nThoi gian thuc hien:%f ms\n", timing(1) / 1000);
+					printf("\nDo phuc tap cua thuat toan O(n)\n");
 					break;
 				}
 		case 8:
 				{
 					// sequentialsearch
+					timing(0);
 					float n;
 					printf("\nNhap vao so can tim:");
 					scanf("%f", &n);
@@ -635,11 +707,15 @@ void runcommand(int selection, struct Array *a)
 					
 					printarraywithmark(a, position, length);
 					free(position);
+					
+					printf("\nThoi gian thuc hien:%f ms\n", timing(1) / 1000);
+					printf("\nDo phuc tap cua thuat toan O(n)\n");
 					break;
 				}
 		case 9:
 				{
 					// binarysearch
+					timing(0);
 					float n;
 					printf("\nNhap vao so can tim:");
 					scanf("%f", &n);
@@ -655,11 +731,15 @@ void runcommand(int selection, struct Array *a)
 						printarraywithmark(a, &position, 1);
 						printf("\nVi tri so can tim la:%d", position);
 					}
+					
+					printf("\nThoi gian thuc hien:%f ms\n", timing(1) / 1000);
+					printf("\nDo phuc tap cua thuat toan O(log(n))\n");
 					break;
 				}
 		case 10:
 				{
 					// difference
+					timing(0);
 					int i1, i2;
 					printf("\nVi tri phan tu thu nhat:");
 					scanf("%d", &i1);
@@ -668,20 +748,22 @@ void runcommand(int selection, struct Array *a)
 					scanf("%d", &i2);
 					fflush(stdin);
 					printf("\nDo lech gia tri giua hai phan tu:%f", difference(a, i1 - 1, i2 - 1));
+					
+					printf("\nThoi gian thuc hien:%f ms\n", timing(1) / 1000);
+					printf("\nDo phuc tap cua thuat toan O(1)\n");
 					break;
 				}
 		case 11:
 				{
 					// deviation
+					timing(0);
 					printf("\nDo lech trung binh cua mang:%f\n", deviation(a));
+					
+					printf("\nThoi gian thuc hien:%f ms\n", timing(1) / 1000);
+					printf("\nDo phuc tap cua thuat toan O(n)\n");
 					break;
 				}
 		case 12:
-				{
-					// big-O  :(
-					break;
-				}
-		case 13:
 				{
 					printf("\nChuong trinh dang ket thuc! ");
 					Sleep(500);
@@ -709,17 +791,9 @@ void commandlineinterface()
 		selection = getcommand();
 		
 		runcommand(selection, a);
-	} while(selection != 13);
+	} while(selection != 12);
 	
 	delete(a);
-}
-
-
-int main(int argc, char ** argv)
-{
-	commandlineinterface();
-	
-	return 0;
 }
 
 #endif

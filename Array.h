@@ -52,7 +52,7 @@ void getnewarray(struct Array **a);					// Nhập vào mảng mới
 void printarraywithmark(struct Array *a, int *position, int length);	// In ra mảng với các vị trí đã được đánh dấu
 
 void escape();										// Thoát khỏi chương trình khi gặp lỗi // Nếu may mắn sẽ gặp được lỗi này! :v
-
+float timing(int code);
 
 
 #endif
