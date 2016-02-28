@@ -134,15 +134,46 @@ void insert(struct Array *a, int k, float value)
 
 
 // Trả về giá trị lớn nhất // Mảng maxArray dùng để lưu vị trí các phần tử mang giá trị lớn nhất
-float findmax(struct Array *a, int **maxArray)
+float findmax(struct Array *a, int **maxArray, int *length)
 {
-	return 0;
+	float max = get(a, 0);
+	int count = 1;
+	int i;
+	for (i = 1; i < a->Count; ++i)
+	{
+		if (max < get(a, i))
+		{
+			max = get(a, i);
+			count = 1;
+		}
+		else if (max == get(a, i))
+		{
+			++count;
+		}
+		
+	}
+	
+	(*length) = count;
+	(*maxArray) = (int *) malloc (sizeof(int) * count);
+	
+	int j = 0;
+	for (i = 0; i < a->Count; ++i)
+	{
+		if (get(a, i) == max)
+		{
+			(*maxArray)[j] = i + 1;
+			++j;
+		}
+	}
+	
+	
+	return max;
 };
 
 // Trả về giá trị nhỏ nhất // Mảng minArray dùng để lưu vị trí các phân tử nhỏ nhất
 float findmin(struct Array *a, int **minArray, int *length)
 {
-	int min = get(a, 0);
+	float min = get(a, 0);
 	int count = 1;
 	int i;
 	for (i = 1; i < a->Count; ++i)
@@ -435,6 +466,22 @@ void runcommand(int selection, struct Array *a)
 		case 5:
 				{
 					// findmax
+					
+					int *maxArray;
+					int length;
+					
+					printf("\nGia tri phan tu nho nhat:%f\n", findmax(a, &maxArray, &length) );
+					printarraywithmark(a, maxArray, length);
+					
+					printf("\nVi tri cac phan tu lon nhat la:");
+					int i;
+					for (i = 0; i < length; ++i)
+					{
+						printf("%d, ", maxArray[i]);
+					}
+					
+					free(maxArray);
+					
 					break;
 				}
 		case 6:

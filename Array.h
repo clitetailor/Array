@@ -29,7 +29,7 @@ void bublesort(struct Array *a);					// Sắp xếp nổi bọt
 void selectionsort(struct Array *a);				// Sắp xếp có lựa chọn
 void insertionsort(struct Array *a);				// Sắp xếp chèn
 
-float findmax(struct Array *a, int **maxArray);			// Trả về giá trị lớn nhất // Mảng maxArray dùng để lưu vị trí các phần tử mang giá trị lớn nhất
+float findmax(struct Array *a, int **maxArray, int *length);			// Trả về giá trị lớn nhất // Mảng maxArray dùng để lưu vị trí các phần tử mang giá trị lớn nhất
 float findmin(struct Array *a, int **minArray, int *length);			// Trả về giá trị nhỏ nhất // Mảng minArray dùng để lưu vị trí các phân tử nhỏ nhất
 float average(struct Array *a);						// Tìm giá trị trung bình của các phần tử trong mảng
 
