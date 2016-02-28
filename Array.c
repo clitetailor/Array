@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <windows.h>
 #include <math.h>
-#include <conio.h> // Bo dong nay
 
 
 int initialize(struct Array **aptr, int size)
