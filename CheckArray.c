@@ -65,17 +65,12 @@ void test_autogenerate()
 	{
 		set(a, i, rand());
 	}
-	
-	insertionsort(a);
+    
 	/* In dãy a ra màn hình */
 	print(a);
-	
-	/*
-	 *
-	 * Đặt các test vào đây
-	 *
-	 *
-	 */
+    insertionsort(a);
+    binarysearch(a);
+
 	test_order(a);
 	
 	
@@ -108,10 +103,9 @@ void test_manual()
 	}
 	
 	
-	insertionsort(a);
-	
 	/* In dãy a ra màn hình */
 	print(a);
+	
 	
 	
 	/*
