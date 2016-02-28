@@ -7,10 +7,16 @@
 
 # Mở CMD
 #	Vào thư mục hiện tại bằng cách copy đường dẫn, nhấn chuột phải vào cmd chọn paste
-#	Gõ mingw32-make Makefile all
+#	Gõ mingw32-make all hoặc mingw32-make test. Ít khả năng là make(Linux) và mingw64-make(x64).
 
-
+.PHONY: all
 all:
 	gcc -Wall -c Array.c
+	gcc -Wall -o Array.exe Array.o
+	
+.PHONY: test
+test:
+	gcc -Dtest -Wall -c Array.c
+	
 	gcc -Wall -c CheckArray.c
 	gcc -Wall -o CheckArray.exe Array.o CheckArray.o

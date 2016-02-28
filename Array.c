@@ -210,7 +210,9 @@ float deviation(struct Array *a)
 
 
 // Giao diện người sử dụng
-/*
+
+#ifndef test
+
 int getcommand()
 {
 	printf("\n");
@@ -428,4 +430,5 @@ int main(int argc, char ** argv)
 	
 	return 0;
 }
-*/
+
+#endif

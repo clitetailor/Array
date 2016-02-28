@@ -11,6 +11,7 @@
  *
  */
 
+/*   Hàm test_findmin kiểm tra xem hàm findmin đã đúng hay chưa   */
 void test_findmin(struct Array *a)
 {
 	int i;
@@ -22,6 +23,7 @@ void test_findmin(struct Array *a)
 	
 	for (i = 0; i < length; ++i)
 	{
+		printf("\nVi tri cac phan tu nho nhat la:\n");
 		printf("%7d\n", minArray[i]);
 	}	
 };
@@ -80,7 +82,14 @@ void test_autogenerate()
 		set(a, i, rand());
 	}
 	
+	/*
+	 *
+	 * Đặt các code cần test vào đây
+	 *
+	 *
+	 */
 	insertionsort(a);
+	
 	/* In dãy a ra màn hình */
 	print(a);
 	
@@ -121,7 +130,14 @@ void test_manual()
 		set(a, i, buff);
 	}
 	
-	
+	/*
+	 *
+	 * Đặt các code cần test vào đây
+	 *
+	 *
+	 */
+	insertionsort(a);
+	 
 	/* In dãy a ra màn hình */
 	print(a);
 	
