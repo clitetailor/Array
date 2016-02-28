@@ -209,9 +209,11 @@ float deviation(struct Array *a)
 
 
 
-// Giao diện người sử dụng
+/*   Giao diện người sử dụng   */
 
-#ifndef test
+
+
+#ifndef test 				// When "test" is mingw32-make first argument. This part is hidden away
 
 int getcommand()
 {
@@ -266,6 +268,7 @@ void getfirstarray(struct Array **a)
 		if (retval == 2)
 		{
 			printf("\nKhong du bo nho de thuc hien chuong trinh\n");
+			escape();
 		}
 		if (retval == 1)
 		{
@@ -287,6 +290,18 @@ void getfirstarray(struct Array **a)
 	};
 	
 };
+
+void escape()
+{
+	printf("\nThoat khoi chuong trinh! ");
+					Sleep(500);
+					printf(".");
+					Sleep(500);
+					printf(".");
+					Sleep(500);
+					printf(".\n\n");
+	exit(0);
+}
 
 
 void getnewarray(struct Array **a)
@@ -319,8 +334,78 @@ void getnewarray(struct Array **a)
 		set(*a, i, fbuff);
 	};
 	
-	print(*a); // Lỗi
+	print(*a);
 };
+
+
+
+void printarraywithmark(struct Array *a, int *position, int length)
+{
+	printf("\nDanh sach mang:\n\t");
+	
+	int j = 0;
+	int i;
+	int ii;
+	for (i = 0; i < a->Count; ++i)
+	{
+		printf("%2d: %7.0f ", i + 1, get(a, i));
+		
+		if (i % 5 == 4)
+		{
+			printf("\n\t");
+			
+			if ( position[j] - 1 <= i )
+			{
+				for (ii = 0; ii < 5; ++ii)
+				{
+					if ( ((position[j] - 1) % 5) == ii && j < length)
+					{
+						printf("     ^      ");
+						++j;
+					}
+					else
+					{
+						printf("            ");
+					}
+					
+					printf("  ");
+				}
+				
+				printf("\n\t");
+			}
+			
+		}
+		else
+			printf("| ");
+	}
+	
+	
+	if ( (i % 5) != 4)
+	{
+		printf("\n\t");
+		
+		if ( position[j] - 1 <= i )
+		{
+			for (ii = 0; ii < 5; ++ii)
+			{
+				if ( ( (position[j] - 1) % 5) == ii && j < length)
+				{
+					printf("     ^      ");
+					++j;
+				}
+				else
+				{
+					printf("            ");
+				}
+				
+				printf("  ");
+			}
+			
+			printf("\n");
+		}
+		
+	}
+}
 
 
 void runcommand(int selection, struct Array *a)
@@ -334,47 +419,73 @@ void runcommand(int selection, struct Array *a)
 				}
 		case 2:
 				{
-					
+					// bublesort
 					break;
 				}
 		case 3:
 				{
+					// selectionsort
 					break;
 				}
 		case 4:
 				{
+					// insertionsort
 					break;
 				}
 		case 5:
 				{
+					// findmax
 					break;
 				}
 		case 6:
 				{
+					// findmin
+					
+					int *minArray;
+					int length;
+					
+					printf("\nGia tri phan tu nho nhat:%f\n", findmin(a, &minArray, &length) );
+					printarraywithmark(a, minArray, length);
+					
+					printf("\nVi tri cac phan tu nho nhat la:");
+					int i;
+					for (i = 0; i < length; ++i)
+					{
+						printf("%d, ", minArray[i]);
+					}
+					
+					free(minArray);
+					
 					break;
 				}
 		case 7:
 				{
+					// average
 					break;
 				}
 		case 8:
 				{
+					// sequentialsearch
 					break;
 				}
 		case 9:
 				{
+					// binarysearch
 					break;
 				}
 		case 10:
 				{
+					// difference
 					break;
 				}
 		case 11:
 				{
+					// deviation
 					break;
 				}
 		case 12:
 				{
+					// big-O  :(
 					break;
 				}
 		case 13:
@@ -408,19 +519,6 @@ void commandlineinterface()
 	} while(selection != 13);
 	
 	delete(a);
-}
-
-
-void escape()
-{
-	printf("\nThoat khoi chuong trinh! ");
-					Sleep(500);
-					printf(".");
-					Sleep(500);
-					printf(".");
-					Sleep(500);
-					printf(".\n\n");
-	exit(0);
 }
 
 

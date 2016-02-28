@@ -49,6 +49,8 @@ void runcommand(int selection, struct Array *a);						// Thực hiện lệnh
 void getfirstarray(struct Array **a);				// Nhập vào mảng mới lần đầu tiên
 void getnewarray(struct Array **a);					// Nhập vào mảng mới
 
+void printarraywithmark(struct Array *a, int *positions, int length);
+
 void escape();										// Thoát khỏi chương trình khi gặp lỗi // Nếu may mắn sẽ gặp được lỗi này! :v
 
 
