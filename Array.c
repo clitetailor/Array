@@ -95,13 +95,39 @@ void print(struct Array *a)
 // Sắp xếp nổi bọt
 void bublesort(struct Array *a)
 {
-	
+	int i, j;
+    
+    for(i = 0; i < a->Count - 1; ++i)
+    {
+        for(j = i + 1; j < a->Count; ++j)
+        {
+            if ( get(a, i) > get(a, j) )
+			{
+				swap(a, i, j);
+			}
+        }
+    }
 };
 
 // Sắp xếp có lựa chọn
 void selectionsort(struct Array *a)
 {
+	int i, j;
 	
+	for(i = 0; i < a->Count; ++i)
+	{
+		int min = i;
+		
+		for(j = i + 1; j < a->Count; ++j)
+		{
+			if( get(a, j) < get(a, min) )
+			{
+				min = j;
+			}
+		}
+		
+		swap(a, i, min);
+	}
 };
 
 
@@ -451,16 +477,25 @@ void runcommand(int selection, struct Array *a)
 		case 2:
 				{
 					// bublesort
+					
+					bublesort(a);
+					print(a);
 					break;
 				}
 		case 3:
 				{
 					// selectionsort
+					
+					selectionsort(a);
+					print(a);
 					break;
 				}
 		case 4:
 				{
 					// insertionsort
+					
+					insertionsort(a);
+					print(a);
 					break;
 				}
 		case 5:

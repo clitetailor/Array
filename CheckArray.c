@@ -88,7 +88,7 @@ void test_autogenerate()
 	 *
 	 *
 	 */
-	insertionsort(a);
+	bublesort(a);
 	
 	/* In dãy a ra màn hình */
 	print(a);
@@ -163,7 +163,7 @@ int main(int argc, char ** argv)
 	 *
 	 *
 	 */
-	test_manual();
+	test_autogenerate();
 	 
 	return 0;
 }
