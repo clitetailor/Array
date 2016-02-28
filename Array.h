@@ -33,8 +33,8 @@ float findmax(struct Array *a, int **maxArray, int *length);			// Trả về gi�
 float findmin(struct Array *a, int **minArray, int *length);			// Trả về giá trị nhỏ nhất // Mảng minArray dùng để lưu vị trí các phân tử nhỏ nhất
 float average(struct Array *a);						// Tìm giá trị trung bình của các phần tử trong mảng
 
-void sequentialsearch(struct Array *a);				// Tìm kiếm lần lượt
-void binarysearch(struct Array *a);					// Tìm kiếm nhị phân
+void sequentialsearch(struct Array *a, float n, int **position, int *length);				// Tìm kiếm lần lượt
+int binarysearch(struct Array *a, float n);			// Tìm kiếm nhị phân
 
 float difference(struct Array *a, int i1, int i2);	// Độ lệch giá trị giữa hai phần tử i1 và i2
 float deviation(struct Array *a);					// Trả về giá trị độ lệch trung bình của mảng // https://en.wikipedia.org/wiki/Average_absolute_deviation -> Mean absolute deviation around a central point
@@ -49,7 +49,7 @@ void runcommand(int selection, struct Array *a);						// Thực hiện lệnh
 void getfirstarray(struct Array **a);				// Nhập vào mảng mới lần đầu tiên
 void getnewarray(struct Array **a);					// Nhập vào mảng mới
 
-void printarraywithmark(struct Array *a, int *positions, int length);
+void printarraywithmark(struct Array *a, int *position, int length);	// In ra mảng với các vị trí đã được đánh dấu
 
 void escape();										// Thoát khỏi chương trình khi gặp lỗi // Nếu may mắn sẽ gặp được lỗi này! :v
 

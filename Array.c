@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <windows.h>
-
+#include <math.h>
+#include <conio.h> // Bo dong nay
 
 
 int initialize(struct Array **aptr, int size)
@@ -82,7 +83,7 @@ void print(struct Array *a)
 	int i;
 	for (i = 0; i < a->Count; ++i)
 	{
-		printf("%d: %7.0f ", i + 1, get(a, i));
+		printf("%2d: %7.3f ", i + 1, get(a, i));
 	
 		if (i % 5 == 4)
 			printf("\n\t");
@@ -236,32 +237,94 @@ float findmin(struct Array *a, int **minArray, int *length)
 // Tìm giá trị trung bình của các phần tử trong mảng
 float average(struct Array *a)
 {
-	return 0;
+    float sum = 0;
+	
+	int i;
+    for (i = 0; i < a->Count; ++i)
+    {
+        sum += get(a,i);
+    }
+    return sum / a->Count;
 };
 
 
 
 // Tìm kiếm lần lượt
-void sequentialsearch(struct Array *a)
+void sequentialsearch(struct Array *a, float n, int **position, int *length)
 {
+	int count = 0;
+	int i;
+	for (i = 0; i < a->Count; ++i)
+	{
+		if (get(a, i) == n)
+		{
+			++count;
+		}
+	}
 	
+	(*length) = count;
+	(*position) = (int *) malloc(sizeof(int) * count);
+	
+	int j = 0;
+	for (i = 0; i < a->Count; ++i)
+	{
+		if (get(a, i) == n)
+		{
+			(*position)[j] = i + 1;
+			++j;
+		}
+	}
 };
 
 // Tìm kiếm nhị phân
-void binarysearch(struct Array *a);
+int binarysearch(struct Array *a, float n)
+{
+    int first, last, middle;
+	
+	first = 0;
+    last = a->Count - 1;
+    middle = (first + last) / 2;
+ 
+	while (first < last)
+	{
+		if ( get(a, middle) < n )
+		{
+			first = middle + 1;
+		}
+		else
+		{
+			last = middle;
+		}
+		
+		middle = (first + last) / 2;
+	}
+	
+	if ( get(a, middle) == n )
+		return middle;
+	else
+		return -1;
+};
 
 
 
 // Độ lệch giá trị giữa hai phần tử i1 và i2
 float difference(struct Array *a, int i1, int i2)
 {
-	return 0;
+	return get(a, i1) - get(a, i2);
 };
 
 // Trả về giá trị độ lệch trung bình của mảng // https://en.wikipedia.org/wiki/Average_absolute_deviation -> Mean absolute deviation around a central point
 float deviation(struct Array *a)
 {
-	return 0;
+    float delta = 0;
+	
+	int i;
+    for (i = 0; i < a->Count; ++i)
+    {
+        delta += fabs( get(a,i) - average(a) );
+    }
+    
+	return delta / a->Count;
 };
 
 
@@ -305,6 +368,8 @@ int getcommand()
 	{
 		printf("\n\nNhap vao lenh ban muon thuc hien (1-13):");
 		scanf("%d", &selection);
+		
+		fflush(stdin);
 	} while (selection < 1 || selection > 13);
 	
 	return selection;
@@ -320,6 +385,8 @@ void getfirstarray(struct Array **a)
 		printf("\nNhap vao so luong phan tu cua mang:");
 		scanf("%d", &n);
 		
+		fflush(stdin);
+		
 		retval = initialize(a, n);
 		
 		if (retval == 2)
@@ -329,7 +396,11 @@ void getfirstarray(struct Array **a)
 		}
 		if (retval == 1)
 		{
-			printf("\nKhong du bo nho de cap phat. Nhap lai so phan tu cua mang hoac nhan Ctrl+C de thoat khoi chuong trinh\n");
+			printf("\nKhong du bo nho de cap phat. Nhap lai so phan tu cua mang!\n");
+		}
+		if (n < 1)
+		{
+			printf("\nKhong hop le!\n");
 		}
 		
 	} while( n < 1 || retval == 1 );
@@ -343,6 +414,7 @@ void getfirstarray(struct Array **a)
 	{
 		printf("%d, ", i+1);
 		scanf("%f", &fbuff);
+		fflush(stdin);
 		set(*a, i, fbuff);
 	};
 	
@@ -370,6 +442,8 @@ void getnewarray(struct Array **a)
 		printf("\nNhap vao so luong phan tu cua mang:");
 		scanf("%d", &n);
 		
+		fflush(stdin);
+		
 		retval = reallocate(a, n);
 		
 		if (retval == 1)
@@ -388,6 +462,8 @@ void getnewarray(struct Array **a)
 	{
 		printf("%d, ", i+1);
 		scanf("%f", &fbuff);
+		
+		fflush(stdin);
 		set(*a, i, fbuff);
 	};
 	
@@ -405,7 +481,7 @@ void printarraywithmark(struct Array *a, int *position, int length)
 	int ii;
 	for (i = 0; i < a->Count; ++i)
 	{
-		printf("%2d: %7.0f ", i + 1, get(a, i));
+		printf("%2d: %7.3f ", i + 1, get(a, i));
 		
 		if (i % 5 == 4)
 		{
@@ -477,7 +553,6 @@ void runcommand(int selection, struct Array *a)
 		case 2:
 				{
 					// bublesort
-					
 					bublesort(a);
 					print(a);
 					break;
@@ -485,7 +560,6 @@ void runcommand(int selection, struct Array *a)
 		case 3:
 				{
 					// selectionsort
-					
 					selectionsort(a);
 					print(a);
 					break;
@@ -493,7 +567,6 @@ void runcommand(int selection, struct Array *a)
 		case 4:
 				{
 					// insertionsort
-					
 					insertionsort(a);
 					print(a);
 					break;
@@ -501,7 +574,6 @@ void runcommand(int selection, struct Array *a)
 		case 5:
 				{
 					// findmax
-					
 					int *maxArray;
 					int length;
 					
@@ -516,13 +588,11 @@ void runcommand(int selection, struct Array *a)
 					}
 					
 					free(maxArray);
-					
 					break;
 				}
 		case 6:
 				{
 					// findmin
-					
 					int *minArray;
 					int length;
 					
@@ -537,32 +607,74 @@ void runcommand(int selection, struct Array *a)
 					}
 					
 					free(minArray);
-					
 					break;
 				}
 		case 7:
 				{
 					// average
+					printf("\nGia tri trung binh cua mang:%f\n", average(a));
 					break;
 				}
 		case 8:
 				{
 					// sequentialsearch
+					float n;
+					printf("\nNhap vao so can tim:");
+					scanf("%f", &n);
+					
+					int *position;
+					int length;
+					sequentialsearch(a, n, &position, &length);
+					
+					printf("\nVi tri cac phan tu can tim:");
+					int i;
+					for (i = 0; i < length; ++i)
+					{
+						printf("%d ,", position[i]);
+					}
+					printf("\n");
+					
+					printarraywithmark(a, position, length);
+					free(position);
 					break;
 				}
 		case 9:
 				{
 					// binarysearch
+					float n;
+					printf("\nNhap vao so can tim:");
+					scanf("%f", &n);
+					fflush(stdin);
+					
+					int position = binarysearch(a, n) + 1;
+					if (position == 0)
+					{
+						printf("\nKhong tim thay phan tu can tim!\n");
+					}
+					else
+					{
+						printarraywithmark(a, &position, 1);
+						printf("\nVi tri so can tim la:%d", position);
+					}
 					break;
 				}
 		case 10:
 				{
 					// difference
+					int i1, i2;
+					printf("\nVi tri phan tu thu nhat:");
+					scanf("%d", &i1);
+					fflush(stdin);
+					printf("Vi tri phan tu thu hai:");
+					scanf("%d", &i2);
+					fflush(stdin);
+					printf("\nDo lech gia tri giua hai phan tu:%f", difference(a, i1 - 1, i2 - 1));
 					break;
 				}
 		case 11:
 				{
 					// deviation
+					printf("\nDo lech trung binh cua mang:%f\n", deviation(a));
 					break;
 				}
 		case 12:
