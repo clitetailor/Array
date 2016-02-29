@@ -1,6 +1,8 @@
 #ifndef _H_ARRAY
 #define _H_ARRAY
 
+#include <stdio.h>
+
 
 // Code name: asre12i3uie3 (on Github)
 // This project was created using Visual Studio Code, Dev-C, Git, Github, MinGW
@@ -48,11 +50,14 @@ int getcommand();									// In ra danh sách các lênh và nhận lệnh của
 void runcommand(int selection, struct Array *a);						// Thực hiện lệnh
 void getfirstarray(struct Array **a);				// Nhập vào mảng mới lần đầu tiên
 void getnewarray(struct Array **a);					// Nhập vào mảng mới
+void getarray(struct Array *a);
 
 void printarraywithmark(struct Array *a, int *position, int length);	// In ra mảng với các vị trí đã được đánh dấu
+void fprint(struct Array *a, FILE *outputfile);							// In mảng vào file
+void fprintarraywithmark(struct Array *a, int *position, int length, FILE *outputfile);		// In mảng đã được đánh dấu vào file
 
 void escape();										// Thoát khỏi chương trình khi gặp lỗi // Nếu may mắn sẽ gặp được lỗi này! :v
-float timing(int code);
+int timing(int code);
 
 
 #endif

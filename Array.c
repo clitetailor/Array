@@ -368,9 +368,8 @@ int getcommand()
 	do
 	{
 		printf("\n\nNhap vao lenh ban muon thuc hien (1-12):");
-		scanf("%d", &selection);
-		
 		fflush(stdin);
+		scanf("%d", &selection);
 	} while (selection < 1 || selection > 12);
 	
 	return selection;
@@ -384,9 +383,8 @@ void getfirstarray(struct Array **a)
 	do
 	{
 		printf("\nNhap vao so luong phan tu cua mang:");
-		scanf("%d", &n);
-		
 		fflush(stdin);
+		scanf("%d", &n);
 		
 		retval = initialize(a, n);
 		
@@ -406,60 +404,74 @@ void getfirstarray(struct Array **a)
 		
 	} while( n < 1 || retval == 1 );
 	
-	char c;
 	
+	char c;
 	do
 	{
 		printf("\nChon nhap vao tu file (F) hay nhap vao tu ban phim (P):");
+		fflush(stdin);
 		c = getc(stdin);
-		if (c == 'p' || c == 'P')
+	} while (c != 'f' && c != 'F' && c != 'p' && c!= 'P');
+	
+	if (c == 'p' || c == 'P')
+	{
+		printf("\n");
+		int i;
+		float fbuff;
+		
+		for (i = 0; i < n; ++i)
 		{
-			printf("\n");
-			int i;
-			float fbuff;
-			
-			for (i = 0; i < n; ++i)
-			{
-				printf("%d, ", i+1);
-				scanf("%f", &fbuff);
-				fflush(stdin);
-				set(*a, i, fbuff);
-			};
-		}
-		if (c == 'F'|| c == 'f')
+			printf("%d, ", i+1);
+			fflush(stdin);
+			scanf("%f", &fbuff);
+			set(*a, i, fbuff);
+		};
+	}
+	if (c == 'F'|| c == 'f')
+	{
+		char filename[100];
+		FILE *inputfile;
+		
+		do
 		{
-			char filename[100];
 			printf("\nNhap vao ten file:");
 			fflush(stdin);
-			fgets(filename, 100, stdin);
+			gets(filename);
 			
-			float fbuff;
-			FILE *inputfile = fopen(filename, "r");
-			int i;
-			for (i = 0; i < (*a)->Count; ++i)
+			inputfile = fopen(filename, "rt");
+			if (inputfile == NULL)
 			{
-				if (feof(inputfile))
-				{
-					set(*a, i, -1);
-				}
-				else
-				{
-					fscanf(inputfile, "%f", &fbuff);
-					set(*a, i, fbuff);
-				}
+				printf("\nFile khong mo duoc!\n");
+			}
+		} while (inputfile == NULL);
+		
+		int i;
+		float fbuff;
+		for (i = 0; i < (*a)->Count; ++i)
+		{
+			if (feof(inputfile))
+			{
+				set(*a, i, -1);
+			}
+			else
+			{
+				fscanf(inputfile, "%f", &fbuff);
+				set(*a, i, fbuff);
 			}
 		}
-	} while (c != 'f' || c != 'F' || c != 'p' || c!= 'P');
+		
+		fclose(inputfile);
+	}
 };
 
 void escape()
 {
 	printf("\nThoat khoi chuong trinh! ");
-					Sleep(500);
+					Sleep(300);
 					printf(".");
-					Sleep(500);
+					Sleep(300);
 					printf(".");
-					Sleep(500);
+					Sleep(300);
 					printf(".\n\n");
 	exit(0);
 }
@@ -472,9 +484,8 @@ void getnewarray(struct Array **a)
 	do
 	{
 		printf("\nNhap vao so luong phan tu cua mang:");
-		scanf("%d", &n);
-		
 		fflush(stdin);
+		scanf("%d", &n);
 		
 		retval = reallocate(a, n);
 		
@@ -486,20 +497,63 @@ void getnewarray(struct Array **a)
 	} while( n < 1 || retval == 1 );
 	
 	
-	printf("\n");
-	int i;
-	float fbuff;
-	
-	for (i = 0; i < n; ++i)
+	char c;
+	do
 	{
-		printf("%d, ", i+1);
-		scanf("%f", &fbuff);
-		
+		printf("\nChon nhap vao tu file (F) hay nhap vao tu ban phim (P):");
 		fflush(stdin);
-		set(*a, i, fbuff);
-	};
+		c = getc(stdin);
+	} while (c != 'f' && c != 'F' && c != 'p' && c!= 'P');
 	
-	print(*a);
+	if (c == 'p' || c == 'P')
+	{
+		printf("\n");
+		int i;
+		float fbuff;
+		
+		for (i = 0; i < n; ++i)
+		{
+			printf("%d, ", i+1);
+			fflush(stdin);
+			scanf("%f", &fbuff);
+			set(*a, i, fbuff);
+		};
+	}
+	if (c == 'F'|| c == 'f')
+	{
+		char filename[100];
+		FILE *inputfile;
+		
+		do
+		{
+			printf("\nNhap vao ten file:");
+			fflush(stdin);
+			gets(filename);
+			
+			inputfile = fopen(filename, "rt");
+			if (inputfile == NULL)
+			{
+				printf("\nFile khong mo duoc!\n");
+			}
+		} while (inputfile == NULL);
+		
+		int i;
+		float fbuff;
+		for (i = 0; i < (*a)->Count; ++i)
+		{
+			if (feof(inputfile))
+			{
+				set(*a, i, -1);
+			}
+			else
+			{
+				fscanf(inputfile, "%f", &fbuff);
+				set(*a, i, fbuff);
+			}
+		}
+		
+		fclose(inputfile);
+	}
 };
 
 
@@ -572,7 +626,90 @@ void printarraywithmark(struct Array *a, int *position, int length)
 	}
 }
 
-float timing(int code)
+void fprint(struct Array *a, FILE *outputfile)
+{
+	fprintf(outputfile, "\nDanh sach mang:\n\t");
+	int i;
+	for (i = 0; i < a->Count; ++i)
+	{
+		fprintf(outputfile, "%2d: %7.3f ", i + 1, get(a, i));
+	
+		if (i % 5 == 4)
+			fprintf(outputfile, "\n\t");
+		else
+			fprintf(outputfile, "| ");
+	}
+}
+
+void fprintarraywithmark(struct Array *a, int *position, int length, FILE *outputfile)
+{
+	fprintf(outputfile, "\nDanh sach mang:\n\t");
+	
+	int j = 0;
+	int i;
+	int ii;
+	for (i = 0; i < a->Count; ++i)
+	{
+		fprintf(outputfile, "%2d: %7.3f ", i + 1, get(a, i));
+		
+		if (i % 5 == 4)
+		{
+			fprintf(outputfile, "\n\t");
+			
+			if ( position[j] - 1 <= i )
+			{
+				for (ii = 0; ii < 5; ++ii)
+				{
+					if ( ((position[j] - 1) % 5) == ii && j < length)
+					{
+						fprintf(outputfile, "     ^      ");
+						++j;
+					}
+					else
+					{
+						fprintf(outputfile, "            ");
+					}
+					
+					fprintf(outputfile, "  ");
+				}
+				
+				fprintf(outputfile, "\n\t");
+			}
+			
+		}
+		else
+			fprintf(outputfile, "| ");
+	}
+	
+	
+	if ( (i % 5) != 4)
+	{
+		fprintf(outputfile, "\n\t");
+		
+		if ( position[j] - 1 <= i )
+		{
+			for (ii = 0; ii < 5; ++ii)
+			{
+				if ( ( (position[j] - 1) % 5) == ii && j < length)
+				{
+					fprintf(outputfile, "     ^      ");
+					++j;
+				}
+				else
+				{
+					fprintf(outputfile, "            ");
+				}
+				
+				fprintf(outputfile, "  ");
+			}
+			
+			fprintf(outputfile, "\n");
+		}
+		
+	}
+}
+
+int timing(int code)
 {
 	static time_t t;
 	if (code == 0)
@@ -589,11 +726,18 @@ float timing(int code)
 
 void runcommand(int selection, struct Array *a)
 {
+	FILE *outputfile = NULL;
+	char filename[100];
+	char c;
+	
+	time_t t;
+	
 	switch (selection)
 	{
 		case 1:
 				{
 					getnewarray(&a);
+					print(a);
 					break;
 				}
 		case 2:
@@ -603,8 +747,32 @@ void runcommand(int selection, struct Array *a)
 					bublesort(a);
 					print(a);
 					
-					printf("\nThoi gian thuc hien:%f ms\n", timing(1) / 1000);
+					t = timing(1);
+					printf("\nThoi gian thuc hien:%li ms\n", t);
 					printf("\nDo phuc tap cua thuat toan O(n^2)\n");
+					
+					printf("\nBan co muon luu vao file (Y/N):");
+					fflush(stdin);
+					c = getc(stdin);
+					
+					if (c == 'y' || c == 'Y')
+					{
+						printf("\nNhap vao ten file:");
+						fflush(stdin);
+						gets(filename);
+						
+						outputfile = fopen(filename, "at");
+						if (outputfile == NULL)
+						{
+							printf("\nKhong mo duoc file!\n");
+							break;
+						}
+						
+						fprint(a, outputfile);
+						
+						fprintf(outputfile, "\nThoi gian thuc hien:%li ms\n", t);
+						fprintf(outputfile, "\nDo phuc tap cua thuat toan O(n^2)\n");
+					}
 					break;
 				}
 		case 3:
@@ -614,8 +782,32 @@ void runcommand(int selection, struct Array *a)
 					selectionsort(a);
 					print(a);
 					
-					printf("\nThoi gian thuc hien:%f ms\n", timing(1) / 1000);
+					t = timing(1);
+					printf("\nThoi gian thuc hien:%li ms\n", t);
 					printf("\nDo phuc tap cua thuat toan O(n^2)\n");
+					
+					printf("\nBan co muon luu vao file (Y/N):");
+					fflush(stdin);
+					c = getc(stdin);
+					
+					if (c == 'y' || c == 'Y')
+					{
+						printf("\nNhap vao ten file:");
+						fflush(stdin);
+						gets(filename);
+						
+						outputfile = fopen(filename, "at");
+						if (outputfile == NULL)
+						{
+							printf("\nKhong mo duoc file!\n");
+							break;
+						}
+						
+						fprint(a, outputfile);
+					
+						fprintf(outputfile, "\nThoi gian thuc hien:%li ms\n", t);
+						fprintf(outputfile, "\nDo phuc tap cua thuat toan O(n^2)\n");
+					}
 					break;
 				}
 		case 4:
@@ -625,8 +817,32 @@ void runcommand(int selection, struct Array *a)
 					insertionsort(a);
 					print(a);
 					
-					printf("\nThoi gian thuc hien:%f ms\n", timing(1) / 1000);
+					t = timing(1);
+					printf("\nThoi gian thuc hien:%li ms\n", t);
 					printf("\nDo phuc tap cua thuat toan O(n^2)\n");
+					
+					printf("\nBan co muon luu vao file (Y/N):");
+					fflush(stdin);
+					c = getc(stdin);
+					
+					if (c == 'y' || c == 'Y')
+					{
+						printf("\nNhap vao ten file:");
+						fflush(stdin);
+						gets(filename);
+						
+						outputfile = fopen(filename, "at");
+						if (outputfile == NULL)
+						{
+							printf("\nKhong mo duoc file!\n");
+							break;
+						}
+							
+						fprint(a, outputfile);
+						
+						fprintf(outputfile, "\nThoi gian thuc hien:%li ms\n", t);
+						fprintf(outputfile, "\nDo phuc tap cua thuat toan O(n^2)\n");
+					}
 					break;
 				}
 		case 5:
@@ -646,10 +862,42 @@ void runcommand(int selection, struct Array *a)
 						printf("%d, ", maxArray[i]);
 					}
 					
-					free(maxArray);
-					
-					printf("\nThoi gian thuc hien:%f ms\n", timing(1) / 1000);
+					t = timing(1);
+					printf("\nThoi gian thuc hien:%li ms\n", t);
 					printf("\nDo phuc tap cua thuat toan O(n)\n");
+					
+					printf("\nBan co muon luu vao file (Y/N):");
+					fflush(stdin);
+					c = getc(stdin);
+					
+					if (c == 'y' || c == 'Y')
+					{
+						printf("\nNhap vao ten file:");
+						fflush(stdin);
+						gets(filename);
+						
+						outputfile = fopen(filename, "at");
+						if (outputfile == NULL)
+						{
+							printf("\nKhong mo duoc file!\n");
+							break;
+						}
+						
+						fprintf(outputfile, "\nGia tri phan tu nho nhat:%f\n", findmax(a, &maxArray, &length) );
+						fprintarraywithmark(a, maxArray, length, outputfile);
+						
+						fprintf(outputfile, "\nVi tri cac phan tu lon nhat la:");
+						int i;
+						for (i = 0; i < length; ++i)
+						{
+							fprintf(outputfile, "%d, ", maxArray[i]);
+						}
+						
+						fprintf(outputfile, "\nThoi gian thuc hien:%li ms\n", t);
+						fprintf(outputfile, "\nDo phuc tap cua thuat toan O(n)\n");
+					}
+					
+					free(maxArray);
 					break;
 				}
 		case 6:
@@ -669,10 +917,42 @@ void runcommand(int selection, struct Array *a)
 						printf("%d, ", minArray[i]);
 					}
 					
-					free(minArray);
-					
-					printf("\nThoi gian thuc hien:%f ms\n", timing(1) / 1000);
+					t = timing(1);
+					printf("\nThoi gian thuc hien:%li ms\n", t);
 					printf("\nDo phuc tap cua thuat toan O(n)\n");
+					
+					printf("\nBan co muon luu vao file (Y/N):");
+					fflush(stdin);
+					c = getc(stdin);
+					
+					if (c == 'y' || c == 'Y')
+					{
+						printf("\nNhap vao ten file:");
+						fflush(stdin);
+						gets(filename);
+						
+						outputfile = fopen(filename, "at");
+						if (outputfile == NULL)
+						{
+							printf("\nKhong mo duoc file!\n");
+							break;
+						}
+						
+						fprintf(outputfile, "\nGia tri phan tu nho nhat:%f\n", findmin(a, &minArray, &length) );
+						fprintarraywithmark(a, minArray, length, outputfile);
+						
+						fprintf(outputfile, "\nVi tri cac phan tu nho nhat la:");
+						int i;
+						for (i = 0; i < length; ++i)
+						{
+							fprintf(outputfile, "%d, ", minArray[i]);
+						}
+						
+						fprintf(outputfile, "\nThoi gian thuc hien:%li ms\n", t);
+						fprintf(outputfile, "\nDo phuc tap cua thuat toan O(n)\n");
+					}
+					
+					free(minArray);
 					break;
 				}
 		case 7:
@@ -681,17 +961,42 @@ void runcommand(int selection, struct Array *a)
 					timing(0);
 					printf("\nGia tri trung binh cua mang:%f\n", average(a));
 					
-					printf("\nThoi gian thuc hien:%f ms\n", timing(1) / 1000);
+					t = timing(1);
+					printf("\nThoi gian thuc hien:%li ms\n", t);
 					printf("\nDo phuc tap cua thuat toan O(n)\n");
+					
+					printf("\nBan co muon luu vao file (Y/N):");
+					fflush(stdin);
+					c = getc(stdin);
+					
+					if (c == 'y' || c == 'Y')
+					{
+						printf("\nNhap vao ten file:");
+						fflush(stdin);
+						gets(filename);
+						
+						outputfile = fopen(filename, "at");
+						if (outputfile == NULL)
+						{
+							printf("\nKhong mo duoc file!\n");
+							break;
+						}
+						
+						fprintf(outputfile, "\nGia tri trung binh cua mang:%f\n", average(a));
+					
+						fprintf(outputfile, "\nThoi gian thuc hien:%li ms\n", t);
+						fprintf(outputfile, "\nDo phuc tap cua thuat toan O(n)\n");
+					}
 					break;
 				}
 		case 8:
 				{
 					// sequentialsearch
-					timing(0);
 					float n;
 					printf("\nNhap vao so can tim:");
 					scanf("%f", &n);
+					
+					timing(0);
 					
 					int *position;
 					int length;
@@ -706,20 +1011,53 @@ void runcommand(int selection, struct Array *a)
 					printf("\n");
 					
 					printarraywithmark(a, position, length);
-					free(position);
 					
-					printf("\nThoi gian thuc hien:%f ms\n", timing(1) / 1000);
+					t = timing(1);
+					printf("\nThoi gian thuc hien:%li ms\n", t);
 					printf("\nDo phuc tap cua thuat toan O(n)\n");
+					
+					printf("\nBan co muon luu vao file (Y/N):");
+					fflush(stdin);
+					c = getc(stdin);
+					
+					if (c == 'y' || c == 'Y')
+					{
+						printf("\nNhap vao ten file:");
+						fflush(stdin);
+						gets(filename);
+						
+						outputfile = fopen(filename, "at");
+						if (outputfile == NULL)
+						{
+							printf("\nKhong mo duoc file!\n");
+							break;
+						}
+						
+						fprintf(outputfile, "\nVi tri cac phan tu can tim:");
+						int i;
+						for (i = 0; i < length; ++i)
+						{
+							fprintf(outputfile, "%d ,", position[i]);
+						}
+						fprintf(outputfile, "\n");
+						
+						fprintarraywithmark(a, position, length, outputfile);
+						
+						fprintf(outputfile, "\nThoi gian thuc hien:%li ms\n", t);
+						fprintf(outputfile, "\nDo phuc tap cua thuat toan O(n)\n");
+					}
+					
+					free(position);
 					break;
 				}
 		case 9:
 				{
 					// binarysearch
-					timing(0);
 					float n;
 					printf("\nNhap vao so can tim:");
-					scanf("%f", &n);
 					fflush(stdin);
+					scanf("%f", &n);
+					timing(0);
 					
 					int position = binarysearch(a, n) + 1;
 					if (position == 0)
@@ -732,25 +1070,82 @@ void runcommand(int selection, struct Array *a)
 						printf("\nVi tri so can tim la:%d", position);
 					}
 					
-					printf("\nThoi gian thuc hien:%f ms\n", timing(1) / 1000);
+					t = timing(1);
+					printf("\nThoi gian thuc hien:%li ms\n", t);
 					printf("\nDo phuc tap cua thuat toan O(log(n))\n");
+					
+					printf("\nBan co muon luu vao file (Y/N):");
+					fflush(stdin);
+					c = getc(stdin);
+					
+					if (c == 'y' || c == 'Y')
+					{
+						printf("\nNhap vao ten file:");
+						fflush(stdin);
+						gets(filename);
+						
+						outputfile = fopen(filename, "at");
+						if (outputfile == NULL)
+						{
+							printf("\nKhong mo duoc file!\n");
+							break;
+						}
+						
+						if (position == 0)
+						{
+							fprintf(outputfile, "\nKhong tim thay phan tu can tim!\n");
+						}
+						else
+						{
+							fprintarraywithmark(a, &position, 1, outputfile);
+							fprintf(outputfile, "\nVi tri so can tim la:%d", position);
+						}
+						
+						fprintf(outputfile, "\nThoi gian thuc hien:%li ms\n", t);
+						fprintf(outputfile, "\nDo phuc tap cua thuat toan O(log(n))\n");
+					}
 					break;
 				}
 		case 10:
 				{
 					// difference
-					timing(0);
 					int i1, i2;
 					printf("\nVi tri phan tu thu nhat:");
+					fflush(stdin);
 					scanf("%d", &i1);
-					fflush(stdin);
 					printf("Vi tri phan tu thu hai:");
-					scanf("%d", &i2);
 					fflush(stdin);
-					printf("\nDo lech gia tri giua hai phan tu:%f", difference(a, i1 - 1, i2 - 1));
+					scanf("%d", &i2);
 					
-					printf("\nThoi gian thuc hien:%f ms\n", timing(1) / 1000);
+					timing(0);
+					printf("\nDo lech gia tri giua hai phan tu %d va %d:%f", i1, i2, difference(a, i1 - 1, i2 - 1));
+					
+					t = timing(1);
+					printf("\nThoi gian thuc hien:%li ms\n", t);
 					printf("\nDo phuc tap cua thuat toan O(1)\n");
+					
+					printf("\nBan co muon luu vao file (Y/N):");
+					fflush(stdin);
+					c = getc(stdin);
+					
+					if (c == 'y' || c == 'Y')
+					{
+						printf("\nNhap vao ten file:");
+						fflush(stdin);
+						gets(filename);
+						
+						outputfile = fopen(filename, "at");
+						if (outputfile == NULL)
+						{
+							printf("\nKhong mo duoc file!\n");
+							break;
+						}
+						
+						fprintf(outputfile, "\nDo lech gia tri giua hai phan tu %d va %d:%f", i1, i2, difference(a, i1 - 1, i2 - 1));
+						
+						fprintf(outputfile, "\nThoi gian thuc hien:%li ms\n", t);
+						fprintf(outputfile, "\nDo phuc tap cua thuat toan O(1)\n");
+					}
 					break;
 				}
 		case 11:
@@ -759,22 +1154,48 @@ void runcommand(int selection, struct Array *a)
 					timing(0);
 					printf("\nDo lech trung binh cua mang:%f\n", deviation(a));
 					
-					printf("\nThoi gian thuc hien:%f ms\n", timing(1) / 1000);
+					t = timing(1);
+					printf("\nThoi gian thuc hien:%li ms\n", t);
 					printf("\nDo phuc tap cua thuat toan O(n)\n");
+					
+					printf("\nBan co muon luu vao file (Y/N):");
+					fflush(stdin);
+					c = getc(stdin);
+					
+					if (c == 'y' || c == 'Y')
+					{
+						printf("\nNhap vao ten file:");
+						fflush(stdin);
+						gets(filename);
+						
+						outputfile = fopen(filename, "at");
+						if (outputfile == NULL)
+						{
+							printf("\nKhong mo duoc file!\n");
+							break;
+						}
+						
+						fprintf(outputfile, "\nDo lech trung binh cua mang:%f\n", deviation(a));
+						
+						fprintf(outputfile, "\nThoi gian thuc hien:%li ms\n", t);
+						fprintf(outputfile, "\nDo phuc tap cua thuat toan O(n)\n");
+					}
 					break;
 				}
 		case 12:
 				{
 					printf("\nChuong trinh dang ket thuc! ");
-					Sleep(500);
+					Sleep(300);
 					printf(".");
-					Sleep(500);
+					Sleep(300);
 					printf(".");
-					Sleep(500);
+					Sleep(300);
 					printf(".\n\n");
 					break;
 				}
 	}
+	
+	fclose(outputfile);
 }
 
 
