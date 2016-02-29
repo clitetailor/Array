@@ -335,7 +335,7 @@ float deviation(struct Array *a)
 
 
 
-#ifdef all
+#ifndef alternative_test
 
 int getcommand()
 {

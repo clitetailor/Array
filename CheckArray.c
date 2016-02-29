@@ -5,7 +5,9 @@
 
 /*   Chương trình test thứ nhất. Được build khi chạy dòng lệnh mingw32-make all   */
 
-#ifdef all
+#ifndef alternative_test
+
+
 
 int main(int argc, char ** argv)
 {
@@ -21,7 +23,7 @@ int main(int argc, char ** argv)
 
 /*   Chương trình test thứ hai. Được build khi chạy dòng lệnh mingw32-make test   */
 
-#ifdef test
+#ifdef alternative_test
 
 
 /*
@@ -92,6 +94,8 @@ void test_autogenerate()
 	 *
 	 */
 	bublesort(a);
+	// insertionsort(a);
+	// selectionsort(a);
 	
 	/* In dãy a ra màn hình */
 	print(a);
@@ -139,7 +143,9 @@ void test_manual()
 	 *
 	 *
 	 */
-	insertionsort(a);
+	bublesort(a);
+	// insertionsort(a);
+	// selectionsort(a);
 	 
 	/* In dãy a ra màn hình */
 	print(a);
@@ -162,7 +168,7 @@ int main(int argc, char ** argv)
 	
 	
 	/*
-	 * Sử dụng test_manual() hoặc thay bằng test_autogenerate()
+	 * Sử dụng test_autogenerate() hoặc thay bằng test_manual()
 	 *
 	 *
 	 */
